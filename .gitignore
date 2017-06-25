@@ -1,0 +1,11 @@
+# Ignora todos os arquivos objetos
+build/*
+
+# Ignora todos os arquivos no diretorio lib
+lib/*
+
+# Ignora todos os binarios/executaveis
+bin/*
+
+# Ignora o diretorio de documentacao
+doc/*
