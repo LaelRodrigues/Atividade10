@@ -38,14 +38,14 @@ int main() {
 	int vet[TAM];
 
 	srand(time(NULL));
-	
+
 	cout << endl;
 	cout << "-------------Testes------------" << endl << endl;
-	testeSequencialIte(vet, TAM, 5);
+	testeSequencialIte(vet, TAM, 13);
 	cout << endl;
-	testeSequencialRec(vet, TAM, 10);
+	testeSequencialRec(vet, TAM, 11);
 	cout << endl;
-	testeBinariaIte(vet, TAM, 2);
+	testeBinariaIte(vet, TAM, -1);
 	cout << endl;
 	testeBinariaRec(vet, TAM, 3);
 	cout << endl;

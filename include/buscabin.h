@@ -10,6 +10,8 @@
 #ifndef BUSCABIN_H
 #define BUSCABIN_H
 
+#include "falhabusca.h"
+
 #include <cstring>
 
 namespace edb1 {
@@ -25,29 +27,36 @@ namespace edb1 {
 	template<typename T>	
 	bool binariaIte(T *vetor, int tam, T chave) {
 
-		if(tam <= 0) {
+		try {
+			if(tam <= 0) throw FalhaBusca();
+			
+			int esq = 0;
+			int dir = tam-1;
+
+			while(esq <= dir) {
+
+				int meio = (esq + dir) / 2;
+
+				if(chave == vetor[meio]) {
+					return true;
+				}
+				if(chave > vetor[meio]) {
+					esq = meio + 1; 
+				}
+				else {
+					dir = meio - 1;
+				}
+			}
+			throw FalhaBusca();
+		}
+		catch (FalhaBusca &exececao) {
+			cout << exececao.what() << endl;
 			return false;
 		}
-
-		int esq = 0;
-		int dir = tam-1;
-
-		while(esq <= dir) {
-
-			int meio = (esq + dir) / 2;
-
-			if(chave == vetor[meio]) {
-				return true;
-			}
-			if(chave > vetor[meio]) {
-				esq = meio + 1; 
-			}
-			else {
-				dir = meio - 1;
-			}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return false;
 		}
-
-		return false;	
 	}
 
 	/**

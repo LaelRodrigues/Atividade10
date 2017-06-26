@@ -25,68 +25,93 @@ namespace edb1 {
 	template<typename T>
 	bool ternariaIte(T *vetor, int tam, T chave){
 
-		int esq, dir;
-		int meio1, meio2;
+		try {
 
-		esq = 0;
-		dir = tam - 1;
+			if(tam <= 0) throw FalhaBusca();
 
-		do {
-			meio1 = esq + (dir - esq)/3;
-			meio2 = (2 * meio1) + esq;
+			int esq, dir;
+			int meio1, meio2;
 
-			if(chave == vetor[meio1] || chave == vetor[meio2]) {
-				return true;
-			}
+			esq = 0;
+			dir = tam - 1;
 
-			else if(chave < vetor[meio1]) {
-				dir = meio1 - 1;
-			}
-			
-			else if(chave > vetor[meio2]) {
-				esq = meio2 + 1;
-			}
-			else {
-				esq = meio1 + 1;
-				dir = meio2 - 1;
-			}
-		} while(dir >= esq);
+			do {
+				meio1 = esq + (dir - esq)/3;
+				meio2 = (2 * meio1) + esq;
 
-		return false;
+				if(chave == vetor[meio1] || chave == vetor[meio2]) {
+					return true;
+				}
+
+				else if(chave < vetor[meio1]) {
+					dir = meio1 - 1;
+				}
+				
+				else if(chave > vetor[meio2]) {
+					esq = meio2 + 1;
+				}
+				else {
+					esq = meio1 + 1;
+					dir = meio2 - 1;
+				}
+			} while(dir >= esq);
+
+			throw FalhaBusca();
+		}
+		catch (FalhaBusca &exececao) {
+			cout << exececao.what() << endl;
+			return false;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return false;
+		}
 	}
 
 	template<>
 	bool ternariaIte< char* >(char** vetor, int tam, char* chave) {
 
-		int esq, dir;
-		int meio1, meio2;
+		try {
 
-		esq = 0;
-		dir = tam - 1;
+			if(tam <= 0) throw FalhaBusca();
+			int esq, dir;
+			int meio1, meio2;
 
-		do {
-			meio1 = esq + (dir - esq)/3;
-			meio2 = (2 * meio1) + esq;
+			esq = 0;
+			dir = tam - 1;
 
-			if(strcmp(chave, vetor[meio1]) == 0 || strcmp(chave, vetor[meio2]) == 0) {
-				return true;
-			}
+			do {
+				meio1 = esq + (dir - esq)/3;
+				meio2 = (2 * meio1) + esq;
 
-			else if(strcmp(chave, vetor[meio1]) < 0) {
-				dir = meio1 - 1;
-			}
-			
-			else if(strcmp(chave, vetor[meio2]) > 0) {
-				esq = meio2 + 1;
-			}
-			else {
-				esq = meio1 + 1;
-				dir = meio2 - 1;
-			}
-		} while(dir >= esq);
+				if(strcmp(chave, vetor[meio1]) == 0 || strcmp(chave, vetor[meio2]) == 0) {
+					return true;
+				}
 
-		return false;
-	}
+				else if(strcmp(chave, vetor[meio1]) < 0) {
+					dir = meio1 - 1;
+				}
+				
+				else if(strcmp(chave, vetor[meio2]) > 0) {
+					esq = meio2 + 1;
+				}
+				else {
+					esq = meio1 + 1;
+					dir = meio2 - 1;
+				}
+			} while(dir >= esq);
+
+			throw FalhaBusca();
+		}
+		catch (FalhaBusca &exececao) {
+			cout << exececao.what() << endl;
+			return false;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return false;
+		}
+	}	
 
 
 	/**
@@ -100,67 +125,89 @@ namespace edb1 {
 	template<typename T>
 	bool ternariaRec(T *vetor, int tam, T chave){
 
-		int meio1, meio2;	
+		try { 
 
-		if(tam == 1) {
-			meio1 = 0;
-			meio2 = 1;
+			if(tam <= 0) throw FalhaBusca();
+			int meio1, meio2;	
+
+			if(tam == 1) {
+				meio1 = 0;
+				meio2 = 1;
+			}
+			else {
+				meio1 = tam/3;
+				meio2 = 2*tam/3;
+			} 
+
+			if(chave == vetor[meio1] || chave == vetor[meio2]) {
+				return true;
+			}
+
+			if(meio1 == meio2) throw FalhaBusca();
+			
+			if(chave < vetor[meio1]) {
+				return ternariaRec(vetor, meio1-1, chave);
+			}
+			if(chave > vetor[meio2]){
+				return ternariaRec(vetor+meio2+1, tam-meio2, chave);
+			}
+			else {
+				return ternariaRec(vetor+meio1+1, meio2-1, chave);
+			}
 		}
-		else {
-			meio1 = tam/3;
-			meio2 = 2*tam/3;
-		} 
-
-		if(chave == vetor[meio1] || chave == vetor[meio2]) {
-			return true;
-		}
-
-		if(meio1 == meio2) {
+		catch (FalhaBusca &exececao) {
+			cout << exececao.what() << endl;
 			return false;
 		}
-		
-		if(chave < vetor[meio1]) {
-			return ternariaRec(vetor, meio1-1, chave);
-		}
-		if(chave > vetor[meio2]){
-			return ternariaRec(vetor+meio2+1, tam-meio2, chave);
-		}
-		else {
-			return ternariaRec(vetor+meio1+1, meio2-1, chave);
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return false;
 		}
 	}
 
 	template<>
-	bool ternariaRec< char* >(char** vetor, int tam, char* chave){
+	bool ternariaRec< char* >(char** vetor, int tam, char* chave) {
 
-		int meio1, meio2;	
+		try {
 
-		if(tam == 1) {
-			meio1 = 0;
-			meio2 = 1;
+			if(tam == 0) throw FalhaBusca();
+			int meio1, meio2;	
+
+			if(tam == 1) {
+				meio1 = 0;
+				meio2 = 1;
+			}
+			else {
+				meio1 = tam/3;
+				meio2 = 2*tam/3;
+			} 
+
+			if(strcmp(chave, vetor[meio1]) == 0 || strcmp(chave, vetor[meio2]) == 0) {
+				return true;
+			}
+
+			if(meio1 == meio2) {
+				return false;
+			}
+
+			if(strcmp(chave, vetor[meio1]) < 0) {
+				return ternariaRec(vetor, meio1-1, chave);
+			}
+			if(strcmp(chave, vetor[meio2]) > 0){
+				return ternariaRec(vetor+meio2+1, tam-meio2, chave);
+			}
+			else {
+				return ternariaRec(vetor+meio1+1, meio2-1, chave);
+			}
 		}
-		else {
-			meio1 = tam/3;
-			meio2 = 2*tam/3;
-		} 
-
-		if(strcmp(chave, vetor[meio1]) == 0 || strcmp(chave, vetor[meio2]) == 0) {
-			return true;
-		}
-
-		if(meio1 == meio2) {
+		catch (FalhaBusca &exececao) {
+			cout << exececao.what() << endl;
 			return false;
 		}
-
-		if(strcmp(chave, vetor[meio1]) < 0) {
-			return ternariaRec(vetor, meio1-1, chave);
-		}
-		if(strcmp(chave, vetor[meio2]) > 0){
-			return ternariaRec(vetor+meio2+1, tam-meio2, chave);
-		}
-		else {
-			return ternariaRec(vetor+meio1+1, meio2-1, chave);
-		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return false;
+		}	
 	}
 }
 
