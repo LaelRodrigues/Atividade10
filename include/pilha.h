@@ -9,102 +9,146 @@
 
 
 #ifndef PILHA_H
-#define PILHA_H	
+#define PILHA_H
 
-/**
- * @class   Pilha pilha.h
- * @brief   Classe que representa um pilha
- * @details Os atributos de uma pilha sao: o vetor, o tamanho maximo
- *			e o tamanho corrente que aumenta a medida que os elementos 
- *			sao inseridos na pilha  
- */  
-template <typename T>
-class Pilha {
-	private:
+#include "falhastads.h"
 
-		/**< Representa o tamanho atual a medida que os elemento sao adicionados */
-		int tam;
+namespace edb1 {
 
-		/**< Vetor que armazena os elementos da pilha */
-		T *vetor; 
+	/**
+	 * @class   Pilha pilha.h
+	 * @brief   Classe que representa um pilha
+	 * @details Os atributos de uma pilha sao: o vetor, o tamanho maximo
+	 *			e o tamanho corrente que aumenta a medida que os elementos 
+	 *			sao inseridos na pilha  
+	 */  
+	template <typename T>
+	class Pilha {
+		private:
 
-		/**< Tamanho maximo que a pilha pode ter */
-		int tamMax;
+			/**< Representa o tamanho atual a medida que os elemento sao adicionados */
+			int tam;
 
-	public:
+			/**< Vetor que armazena os elementos da pilha */
+			T *vetor; 
 
-		/**< Construtor parametrizado */
-		Pilha(int maximo);
+			/**< Tamanho maximo que a pilha pode ter */
+			int tamMax;
 
-		/**< Adicionar elementos a pilha*/
-		int push(T elemento);
+		public:
 
-		/**< Remove elementos do topo da pilha */
-		int pop();
+			/**< Construtor parametrizado */
+			Pilha(int maximo);
 
-		/**< Retorna o topo da pilha */
-		T top();
+			/**< Adicionar elementos a pilha*/
+			int push(T elemento);
 
-		/**< Destrutor */	
-		~Pilha();
-};
+			/**< Remove elementos do topo da pilha */
+			int pop();
 
+			/**< Retorna o topo da pilha */
+			T top();
 
-/**
- * @param maximo Tamanho maximo da pilha 
- */
-template <typename T>
-Pilha <T>:: Pilha(int maximo) {
-	vetor = new T[maximo];
-	tam = 0;
-	tamMax = maximo;
-}
+			/**< Destrutor */	
+			~Pilha();
+	};
 
 
-/**
- * @details Caso o indice corrente seja igual ou maior ao tamanho
- *			maximo nao podera mais ser adicionado elementos
- * @param elemento Elemento a ser adicionado a pilha 
- * return O proximo indice onde o proximo elemento sera adicionado
- */
-template<typename T>
-int Pilha <T>:: push(T elemento) {
-	if(tam < tamMax){
-		vetor[tam] = elemento;
-		return tam++;	
+	/**
+	 * @param maximo Tamanho maximo da pilha 
+	 */
+	template <typename T>
+	Pilha <T>:: Pilha(int maximo) {
+		try {
+			if(maximo <= 0) throw CapacidadeInvalida();
+			vetor = new T[maximo];
+			tam = 0;
+			tamMax = maximo;
+		}
+		catch (CapacidadeInvalida &excecao) {
+			vetor = new T[0];		
+			cout << excecao.what() << endl;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+		}
 	}
-	return tam;
-}
 
 
-/**
- * @details Caso o indice corrente seja igual ou menor que zero
- *			nao podera mais ser removidos elementos 
- * @return O indice anterior que representa a posicao da pilha 
- *		   a ser removida
- */
-template<typename T>
-int Pilha <T>:: pop(){
-	if(tam == 0) {
-		return 0;
+	/**
+	 * @details Caso o indice corrente seja igual ou maior ao tamanho
+	 *			maximo nao podera mais ser adicionado elementos
+	 * @param elemento Elemento a ser adicionado a pilha 
+	 * return O proximo indice onde o proximo elemento sera adicionado
+	 */
+	template<typename T>
+	int Pilha <T>:: push(T elemento) {
+		try {
+			if(tam < tamMax){
+				vetor[tam] = elemento;
+				return tam++;	
+			}
+			throw TAD_Cheia();
+		}
+		catch (TAD_Cheia &excecao) {
+			cout << excecao.what() << endl;
+			return tam;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return tam;
+		}
 	}
-	return tam--;
-}
 
 
-/**
- *@return O ultimo elemento da pilha 
- */
-template<typename T>
-T Pilha <T>:: top() {
-	return vetor[tam-1];
-}
+	/**
+	 * @details Caso o indice corrente seja igual ou menor que zero
+	 *			nao podera mais ser removidos elementos 
+	 * @return O indice anterior que representa a posicao da pilha 
+	 *		   a ser removida
+	 */
+	template<typename T>
+	int Pilha <T>:: pop(){
+		try {
+			if(tam <= 0) throw TAD_Vazia();
+			return tam--;
+		}
+		catch (TAD_Vazia &excecao) {
+			cout << excecao.what() << endl;
+			return 0;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return 0;
+		}	
+	}
 
 
-/** Destrutor da pilha */
-template <typename T>
-Pilha <T>:: ~Pilha(){
-	delete [] vetor;
+	/**
+	 *@return O ultimo elemento da pilha 
+	 */
+	template<typename T>
+	T Pilha <T>:: top() {
+		try {
+			if(tam <= 0) throw TAD_Vazia();
+			return vetor[tam-1];
+		}
+		catch (TAD_Vazia &excecao) {
+			cout << excecao.what() << endl;
+			return 0;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return 0;
+		}	
+	}
+
+
+	/** Destrutor da pilha */
+	template <typename T>
+	Pilha <T>:: ~Pilha(){
+		delete [] vetor;
+	}
 }
 
 #endif

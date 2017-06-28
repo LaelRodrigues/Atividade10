@@ -1,10 +1,30 @@
+/**
+ * @file	testetads.h
+ * @brief	Definicao e implementacao das funcaes para 
+ *			teste das TADs
+ * @author	LaelRodrigues (laelrodrigues7@gmail.com)
+ * @since	26/06/2017
+ * @date	27/06/2017
+ */	
+
 #ifndef TESTETADS_H
 #define TESTETADS_H
 
 #include "pilha.h"
-#include "fila.h"
-#include "lista.h"
+using edb1::Pilha;
 
+#include "fila.h"
+using edb1::Fila;
+
+#include "lista.h"
+using edb1::Lista;
+
+
+/**
+ * @brief Funcao de teste da TAD pilha
+ * @param pilha TAD pilha
+ * @param capacidade Tamanho maximo da pilha
+ */ 
 template<typename T>
 void testePilha(T &pilha, int capacidade) {
 
@@ -23,6 +43,12 @@ void testePilha(T &pilha, int capacidade) {
 
 }
 
+
+/**
+ * @brief Funcao de teste da TAD fila
+ * @param fila TAD fila
+ * @param capacidade Tamanho maximo da fila
+ */
 template<typename T>
 void testeFila(T &fila, int capacidade) {
 
@@ -41,6 +67,11 @@ void testeFila(T &fila, int capacidade) {
 
 }
 
+
+/**
+ * @brief Funcao de teste da TAD lista
+ * @param lista TAD lista
+ */
 template <typename T>
 void testeLista(T &lista) {
 
@@ -52,9 +83,9 @@ void testeLista(T &lista) {
 		lista.inserirOrdenado(i);
 	}
 	cout << "Acessar: " << endl;
-	Node<int> *acesso; 
-	acesso = lista.acessar(11);
-	if(acesso) cout << "valor do elemento: " << 11 << endl;
+	bool teste;
+	teste = lista.acessar(20);
+	if(teste) cout << "valor do elemento: " << 11 << endl;
 	cout << "_________________________________" << endl;
 
 }

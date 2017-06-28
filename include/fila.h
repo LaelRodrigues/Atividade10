@@ -15,124 +15,164 @@
 using std::cout;
 using std::endl;
 
-#include <cstdlib>
-using std::abort;
+#include "falhastads.h"
 
-/**
- * @class   Fila fila.h
- * @brief   Classe que representa um fila
- * @details Os atributos de uma fila sao: o vetor, o tamanho maximo
- *			e o tamanho corrente que aumenta a medida que os elementos 
- *			sao inseridos na pilha  
- */  
+namespace edb1 {
 
-template <typename T>
-class Fila {
-	private:
+	/**
+	 * @class   Fila fila.h
+	 * @brief   Classe que representa um fila
+	 * @details Os atributos de uma fila sao: o vetor, o tamanho maximo
+	 *			e o tamanho corrente que aumenta a medida que os elementos 
+	 *			sao inseridos na pilha  
+	 */  
 
-		/**< Representa o tamanho atual a medida que os elemento sao adicionados */
-		int tam;
+	template <typename T>
+	class Fila {
+		private:
 
-		/**< Vetor que armazena os elementos da pilha */
-		T *vetor; 
+			/**< Representa o tamanho atual a medida que os elemento sao adicionados */
+			int tam;
 
-		/**< Tamanho maximo que a pilha pode ter */
-		int tamMax;
+			/**< Vetor que armazena os elementos da pilha */
+			T *vetor; 
 
-	public:
+			/**< Tamanho maximo que a pilha pode ter */
+			int tamMax;
 
-		/**< Construtor padrao */
-		Fila();
+		public:
 
-		/**< Construtor parametrizado */
-		Fila(int maximo);
+			/**< Construtor padrao */
+			Fila();
 
-		/**< Adicionar elemento no fim da fila*/
-		int push(T elemento);
+			/**< Construtor parametrizado */
+			Fila(int maximo);
 
-		/**< Remove elemento no inicio da fila */
-		int pop();
+			/**< Adicionar elemento no fim da fila*/
+			int push(T elemento);
 
-		/**< retorna o primeiro elemento da fila */
-		T front();
+			/**< Remove elemento no inicio da fila */
+			int pop();
 
-		/**< retorna o ultimo elemento da fila */	  
-		T back();
-};
+			/**< retorna o primeiro elemento da fila */
+			T front();
 
-/**
- * @param maximo Tamanho maximo da fila 
- */
-template <typename T>
-Fila <T>:: Fila(int maximo) {
-	vetor = new T[maximo];
-	tam = 0;
-	tamMax = maximo;
-}
+			/**< retorna o ultimo elemento da fila */	  
+			T back();
+	};
 
-
-/**
- * @details Caso o indice corrente seja igual ou maior ao tamanho
- *			maximo nao podera mais ser adicionado elementos
- * @param elemento Elemento a ser adicionado a fila 
- * return O proximo indice onde o proximo elemento sera adicionado
- */
-template<typename T>
-int Fila <T>:: push(T elemento) {
-	if(tam < tamMax){
-		vetor[tam] = elemento;
-		return tam++;	
+	/**
+	 * @param maximo Tamanho maximo da fila 
+	 */
+	template <typename T>
+	Fila <T>:: Fila(int maximo) {
+		try {
+			if(maximo <= 0) throw CapacidadeInvalida();
+			vetor = new T[maximo];
+			tam = 0;
+			tamMax = maximo;
+		}
+		catch (CapacidadeInvalida &excecao) {
+			vetor = new T[0];		
+			cout << excecao.what() << endl;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+		}
 	}
-	return tam;
-}
 
 
-/**
- * @details Caso o indice corrente seja igual a zero
- *			nao podera mais ser removidos elementos 
- * @return O indice anterior que representa a posicao da pilha 
- *		   a ser removida
- */
-template<typename T>
-int Fila <T>:: pop(){
-	if(tam == 0) {
-		return 0;
+	/**
+	 * @details Caso o indice corrente seja igual ou maior ao tamanho
+	 *			maximo nao podera mais ser adicionado elementos
+	 * @param elemento Elemento a ser adicionado a fila 
+	 * return O proximo indice onde o proximo elemento sera adicionado
+	 */
+	template<typename T>
+	int Fila <T>:: push(T elemento) {
+		try {
+			if(tam < tamMax){
+				vetor[tam] = elemento;
+				return tam++;	
+			}
+			throw TAD_Cheia();
+		}
+		catch (TAD_Cheia &excecao) {
+			cout << excecao.what() << endl;
+			return tam;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return tam;
+		}
 	}
-	for(int i = 0; i < tam - 1; i++) {
-		vetor[i] = vetor[i+1];
-	}
-	return tam--;
-}
 
-/**
- * @details Caso o tamanho atual da fila seja igual a zero,
- *			fila vazia, nao a elementos a ser acessados
- * @return O primeiro elemento da fila
- */
-template<typename T>
-T Fila <T>:: front(){
-	if(tam == 0){
-		cout << "Nao a elementos para acessar, fila vazia." << endl;
-		abort();
-	}
-	else {
-		return vetor[0];
-	}
-}
 
-/**
- * @details Caso o tamanho atual da fila seja igual a zero,
- *			fila vazia, nao a elementos a ser acessados
- * @return O ultimo elemento da fila
- */
-template<typename T>
-T Fila <T>:: back(){
-	if(tam == 0){
-		cout << "Nao a elementos para acessar, fila vazia." << endl;
-		abort();
+	/**
+	 * @details Caso o indice corrente seja igual a zero
+	 *			nao podera mais ser removidos elementos 
+	 * @return O indice anterior que representa a posicao da pilha 
+	 *		   a ser removida
+	 */
+	template<typename T>
+	int Fila <T>:: pop(){
+		try {
+			if(tam <= 0) throw TAD_Vazia();
+			for(int i = 0; i < tam - 1; i++) {
+				vetor[i] = vetor[i+1];
+			}
+			return tam--;
+		}
+		catch (TAD_Vazia &excecao) {
+			cout << excecao.what() << endl;
+			return 0;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return 0;
+		}	
 	}
-	else {
-		return vetor[tam-1];
+
+	/**
+	 * @details Caso o tamanho atual da fila seja igual a zero,
+	 *			fila vazia, nao a elementos a ser acessados
+	 * @return O primeiro elemento da fila
+	 */
+	template<typename T>
+	T Fila <T>:: front(){
+		try {
+			if(tam <= 0) throw TAD_Vazia();
+			return vetor[0];
+		}
+		catch (TAD_Vazia &excecao) {
+			cout << excecao.what() << endl;
+			return 0;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return 0;
+		}	
+	}
+
+	/**
+	 * @details Caso o tamanho atual da fila seja igual a zero,
+	 *			fila vazia, nao a elementos a ser acessados
+	 * @return O ultimo elemento da fila
+	 */
+	template<typename T>
+	T Fila <T>:: back(){
+		try {
+			if(tam <= 0) throw TAD_Vazia();
+			return vetor[tam-1];
+		}
+		catch (TAD_Vazia &excecao) {
+			cout << excecao.what() << endl;
+			return 0;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+			return 0;
+		}	
 	}
 }
 

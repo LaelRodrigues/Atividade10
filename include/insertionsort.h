@@ -10,6 +10,8 @@
 #ifndef INSERTIONSORT_H
 #define INSERTIONSORT_H
 
+#include "falhaords.h"
+
 namespace edb1 {
 
     /**
@@ -20,19 +22,27 @@ namespace edb1 {
      */ 
 	template<typename T>
 	void insertionSort(T *vetor, int tam) {
-		
-		int pos; 
-		T temp;
-    	for (int i = 1; i < tam; i++) {
-        	pos = i;
-       		temp = vetor[i]; 
-       		while (pos > 0 && vetor[pos-1] > vetor[pos]) {
-            	temp = vetor[pos];
-            	vetor[pos] = vetor[pos-1];
-            	vetor[pos-1] = temp;
-            	pos--;
-        	}
+		try {
+            if(tam <= 0) throw TamanhoInvalido();
+    		int pos; 
+    		T temp;
+        	for (int i = 1; i < tam; i++) {
+            	pos = i;
+           		temp = vetor[i]; 
+           		while (pos > 0 && vetor[pos-1] > vetor[pos]) {
+                	temp = vetor[pos];
+                	vetor[pos] = vetor[pos-1];
+                	vetor[pos-1] = temp;
+                	pos--;
+            	}
+            }
     	}
+        catch (TamanhoInvalido &excecao) {
+            cout << excecao.what() << endl;
+        }
+        catch (...) {
+            cout << "Erro desconhecido." << endl;
+        }   
 	}
 }
 

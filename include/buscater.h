@@ -1,5 +1,5 @@
 /**
- * @file	buscaster.h
+ * @file	buscater.h
  * @brief	Definicao e implementacao das funçães de busca 
  *			ternaria em sua versao iterativa e recursiva
  * @author	LaelRodrigues (laelrodrigues7@gmail.com)
@@ -11,6 +11,8 @@
 #define TERNARIA_H
 
 #include <cstring>
+
+#include "falhabusca.h"
 
 namespace edb1 {
 
@@ -68,6 +70,14 @@ namespace edb1 {
 		}
 	}
 
+	/**
+	 * @brief Funcao especializada de busca ternaria que verifica de maneira 
+	 *        iterativa se um elemento esta presente no vetor 	 
+ 	 * @param vetor Sequencia onde o elemento sera buscado
+ 	 * @param tam Tamanho do vetor
+ 	 * @param chave Elemento a ser buscado 
+ 	 * @return True se o elemento estiver no vetor ou false caso contrario
+ 	 */
 	template<>
 	bool ternariaIte< char* >(char** vetor, int tam, char* chave) {
 
@@ -165,6 +175,13 @@ namespace edb1 {
 		}
 	}
 
+	/** @brief Funcao especializada de busca ternaria que verifica de maneira 
+	 *        recursiva se um elemento esta presente no vetor 	 
+ 	 * @param vetor Sequencia onde o elemento sera buscado
+ 	 * @param tam Tamanho do vetor
+ 	 * @param chave Elemento a ser buscado 
+ 	 * @return True se o elemento estiver no vetor ou false caso contrario
+ 	 */
 	template<>
 	bool ternariaRec< char* >(char** vetor, int tam, char* chave) {
 

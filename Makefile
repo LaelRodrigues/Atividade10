@@ -33,13 +33,13 @@ prog_estatico: $(OBJ_DIR)/main.o
 	@echo "+++ [Executavel $@ criado em $(BIN_DIR)] +++"
 	@echo "--------------------------------------------------"
 
-prog_dinamico: $(OBJ_DIR)/main.o
+prog_dinamico: $(OBJ_DIR)/main.o 
 	$(CC) $(CFLAGS) $(LIB_DIR)/lael.so -o $(BIN_DIR)/prog_dinamico $^
 	@echo "--------------------------------------------------"
 	@echo "+++ [Executavel $@ criado em $(BIN_DIR)] +++"
 	@echo "--------------------------------------------------"
 
-$(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp $(INC_DIR)/testebuscas.h
+$(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp $(LIB_DIR)/lael.a $(INC_DIR)/testebuscas.h $(INC_DIR)/testeords.h $(INC_DIR)/testetads.h
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 

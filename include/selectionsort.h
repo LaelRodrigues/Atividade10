@@ -10,28 +10,36 @@
 #ifndef SELECTIONSORT_H
 #define SELECTIONSORT_H
 
+#include "falhaords.h"
+
 namespace edb1 {
 
 	/**
 	 * @brief Funcao que ordena os elementos de um vetor
 	 *		  atraves do algoritmo selectionsort
  	 * @param vetor Sequencia de elementos a serem ordenados
- 	 * @param inicio Posicao inicial do vetor
- 	 * @param fim Posicao final do vetor
+ 	 * @param tam Tamanho da sequencia
  	 */	
 	template<typename T>
 	void selectionSort(T *vetor, int tam) {
-
-		for(int i = 0; i < tam; i++){ 		
-			int pos = i;
-			for (int j = i+1; j < tam; j++){
-				if(vetor[j] < vetor[pos]) pos = j;
+		try {
+			if(tam <= 0) throw TamanhoInvalido();
+			for(int i = 0; i < tam; i++){ 		
+				int pos = i;
+				for (int j = i+1; j < tam; j++){
+					if(vetor[j] < vetor[pos]) pos = j;
+				}
+				T tmp = vetor[i];
+				vetor[i] = vetor[pos];
+				vetor[pos] = tmp;
 			}
-			T tmp = vetor[i];
-			vetor[i] = vetor[pos];
-			vetor[pos] = tmp;
 		}
-
+		catch (TamanhoInvalido &excecao) {
+			cout << excecao.what() << endl;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+		}	
 	}
 }
 

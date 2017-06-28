@@ -1,3 +1,12 @@
+/**
+ * @file	testebuscas.h
+ * @brief	Definicao e implementacao das funcaes para 
+ *			teste dos algoritmos de busca
+ * @author	LaelRodrigues (laelrodrigues7@gmail.com)
+ * @since	25/06/2017
+ * @date	27/06/2017
+ */	
+
 #ifndef TESTEBUSCAS_H
 #define TESTEBUSCAS_H
 
@@ -19,6 +28,12 @@ using edb1::ternariaIte;
 using edb1::ternariaRec;
 
 
+/**
+ * @brief Funcao de teste da busca sequencial iterativa 	 
+ * @param vetor Sequencia onde o elemento sera buscado
+ * @param tam Tamanho do vetor
+ * @param chave Elemento a ser buscado 
+ */
 template<typename T>
 void testeSequencialIte(T *vetor, int tam, T chave) {
 
@@ -40,7 +55,12 @@ void testeSequencialIte(T *vetor, int tam, T chave) {
 	}
 	cout << "_________________________________" << endl;
 }
-
+/**
+ * @brief Funcao de teste da busca sequencial recursiva 	 
+ * @param vetor Sequencia onde o elemento sera buscado
+ * @param tam Tamanho do vetor
+ * @param chave Elemento a ser buscado 
+ */
 template<typename T>
 void testeSequencialRec(T *vetor, int tam, T chave) {
 
@@ -64,6 +84,12 @@ void testeSequencialRec(T *vetor, int tam, T chave) {
 
 }
 
+/**
+ * @brief Funcao de teste da busca binaria iterativa 	 
+ * @param vetor Sequencia onde o elemento sera buscado
+ * @param tam Tamanho do vetor
+ * @param chave Elemento a ser buscado 
+ */
 template<typename T>
 void testeBinariaIte(T *vetor, int tam, T chave){
 
@@ -87,6 +113,12 @@ void testeBinariaIte(T *vetor, int tam, T chave){
 
 }
 
+/**
+ * @brief Funcao de teste da busca binaria recursiva 	 
+ * @param vetor Sequencia onde o elemento sera buscado
+ * @param tam Tamanho do vetor
+ * @param chave Elemento a ser buscado 
+ */
 template<typename T>
 void testeBinariaRec(T *vetor, int tam, T chave) {
 
@@ -109,6 +141,13 @@ void testeBinariaRec(T *vetor, int tam, T chave) {
 	cout << "_________________________________" << endl;
 }
 
+
+/**
+ * @brief Funcao de teste da busca ternaria iterativa 	 
+ * @param vetor Sequencia onde o elemento sera buscado
+ * @param tam Tamanho do vetor
+ * @param chave Elemento a ser buscado 
+ */
 template<typename T>
 void testeTernariaIte(T *vetor, int tam, T chave) {
 
@@ -124,7 +163,7 @@ void testeTernariaIte(T *vetor, int tam, T chave) {
 	cout << endl;
 	cout << "Elemento: " << chave << endl;
 
-	bool result = ternairaIte(vetor, tam, chave);
+	bool result = ternariaIte(vetor, tam, chave);
 	if(result == true) {
 		cout << "O elemento esta no vetor" << endl; 
 	}
@@ -132,6 +171,13 @@ void testeTernariaIte(T *vetor, int tam, T chave) {
 
 }
 
+
+/**
+ * @brief Funcao de teste da busca ternaria recursiva 	 
+ * @param vetor Sequencia onde o elemento sera buscado
+ * @param tam Tamanho do vetor
+ * @param chave Elemento a ser buscado 
+ */
 template<typename T>
 void testeTernariaRec(T *vetor, int tam, T chave) {
 
@@ -147,7 +193,7 @@ void testeTernariaRec(T *vetor, int tam, T chave) {
 	cout << endl;
 	cout << "Elemento: " << chave << endl;
 
-	bool result = ternairaIte(vetor, tam, chave);
+	bool result = ternariaIte(vetor, tam, chave);
 	if(result == true) {
 		cout << "O elemento esta no vetor" << endl; 
 	}

@@ -10,6 +10,8 @@
 #ifndef QUICKSORT_H
 #define QUICKSORT_H
 
+#include "falhaords.h"
+
 namespace edb1 {
 
 	/**
@@ -21,33 +23,41 @@ namespace edb1 {
  	 */	
 	template <typename T>
 	void quickSort(T *vetor, int inicio, int fim){
-	  
-		int pivot, i, j, temp;
-		if(inicio < fim) {
-			pivot = inicio;
-			i = inicio;
-			j = fim;
-			while(i < j) {
-				while(vetor[i] <= vetor[pivot] && i <= fim)
-					i++;
-				while(vetor[j] > vetor[pivot] && j >= inicio)
-					j--;
-				if(i < j) {
-				temp = vetor[i];
-				vetor[i] = vetor[j];
-				vetor[j] = temp;
+	  	
+	  	try {
+	  		if(inicio > fim) throw TamanhoInvalido(); 
+			int pivot, i, j, temp;
+			if(inicio < fim) {
+				pivot = inicio;
+				i = inicio;
+				j = fim;
+				while(i < j) {
+					while(vetor[i] <= vetor[pivot] && i <= fim)
+						i++;
+					while(vetor[j] > vetor[pivot] && j >= inicio)
+						j--;
+					if(i < j) {
+					temp = vetor[i];
+					vetor[i] = vetor[j];
+					vetor[j] = temp;
+					}
 				}
+
+			temp = vetor[j];
+			vetor[j] = vetor[pivot];
+			vetor[pivot] = temp;
+
+			quickSort(vetor, inicio, j-1);
+			quickSort(vetor, j+1, fim);
+			
 			}
-
-		temp = vetor[j];
-		vetor[j] = vetor[pivot];
-		vetor[pivot] = temp;
-
-		quickSort(vetor, inicio, j-1);
-		quickSort(vetor, j+1, fim);
-		
 		}
-
+		catch (TamanhoInvalido &excecao) {
+			cout << excecao.what() << endl;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+		}	
 	}
 }
 

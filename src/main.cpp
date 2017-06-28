@@ -28,6 +28,7 @@ using std::time;
 #include "buscater.h"
 #include "testebuscas.h"
 #include "testeords.h"
+#include "testetads.h"
 
 using namespace edb1;
 
@@ -39,25 +40,51 @@ int main() {
 
 	srand(time(NULL));
 
+	Pilha <int> pilha(TAM);
+	Fila <int> fila(TAM);
+	Lista <int> lista;
+
 	cout << endl;
 	cout << "-------------Testes------------" << endl << endl;
 	testeSequencialIte(vet, TAM, 13);
 	cout << endl;
-	testeSequencialRec(vet, TAM, 11);
+	testeSequencialRec(vet, 0, 11);
 	cout << endl;
 	testeBinariaIte(vet, TAM, -1);
 	cout << endl;
-	testeBinariaRec(vet, TAM, 3);
+	testeBinariaRec(vet, TAM, 27);
 	cout << endl;
-	testeBubbleSort(vet, TAM);
+	testeTernariaIte(vet, TAM, 14);
 	cout << endl;
-	testeInsertionSort(vet, TAM);
+	testeTernariaRec(vet, TAM, -20);
 	cout << endl;
-	testeSelectionSort(vet, TAM);
+	testeBubbleSort(vet, -5);
 	cout << endl;
-	testeQuickSort(vet, TAM);
+	testeInsertionSort(vet, -10);
 	cout << endl;
-	testeMergeSort(vet, TAM);
+	testeSelectionSort(vet, -15);
+	cout << endl;
+	testeQuickSort(vet, 0);
+	cout << endl;
+	testeMergeSort(vet, 10);
+	cout << endl;
+	testePilha(pilha, TAM);
+	cout << endl;
+	testeFila(fila, TAM);
+	cout << endl;
+	testeLista(lista);
+	/*cout << "		[Pilha]"<< endl;
+	cout << endl;
+	pilha.pop();
+	cout << "Elmentos:";
+	for(int i = 0; i < TAM; i++) {
+		pilha.push(i+1);
+		cout << " " << pilha.top();
+	}
+	cout << endl;
+	pilha.push(11);
+	cout << "_________________________________" << endl;*/
+
 	
 	return 0;
 }

@@ -12,9 +12,7 @@
 
 #include <cstring>
 
-#include <iostream>
-using std::cout;
-using std::endl;
+#include "falhaords.h" 
 
 namespace edb1 {
 
@@ -26,18 +24,26 @@ namespace edb1 {
      */ 
 	template<typename T>
 	void bubbleSort(T *vetor, int tam){
+		try {
+			if(tam <= 0) throw TamanhoInvalido();
+			T temp;
 
-		T temp;
-
-		for(int i = 0; i < tam; i++){
-			for(int j = 0; j < tam-1; j++) {
-				if(vetor[j+1] < vetor[j]) {
-					temp = vetor[j];
-					vetor[j] = vetor[j+1];
-					vetor[j+1] = temp;
+			for(int i = 0; i < tam; i++){
+				for(int j = 0; j < tam-1; j++) {
+					if(vetor[j+1] < vetor[j]) {
+						temp = vetor[j];
+						vetor[j] = vetor[j+1];
+						vetor[j+1] = temp;
+					}
 				}
 			}
 		}
+		catch (TamanhoInvalido &excecao) {
+			cout << excecao.what() << endl;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+		}	
 	}
 }
 

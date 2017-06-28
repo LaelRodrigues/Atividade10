@@ -10,6 +10,8 @@
 #ifndef MERGESORT_H
 #define MERGESORT_H
 
+#include "falhaords.h"
+
 namespace edb1 {
 
 	/**
@@ -60,13 +62,21 @@ namespace edb1 {
  	 */	
 	template<typename T>
 	void mergeSort(T *vetor, int inicio, int fim){
-		
-		if (inicio < fim) {
-		int meio = (inicio+fim)/2;
-		mergeSort(vetor, inicio, meio);
-		mergeSort(vetor, meio+1, fim);
-		merge(vetor, inicio, meio, fim);
+		try {
+			if(inicio > fim) throw TamanhoInvalido();		
+			if (inicio < fim) {
+				int meio = (inicio+fim)/2;
+				mergeSort(vetor, inicio, meio);
+				mergeSort(vetor, meio+1, fim);
+				merge(vetor, inicio, meio, fim);
+			}
 		}
+		catch (TamanhoInvalido &excecao) {
+			cout << excecao.what() << endl;
+		}
+		catch (...) {
+			cout << "Erro desconhecido." << endl;
+		}	
 	}
 }
 
