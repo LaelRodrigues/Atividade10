@@ -15,7 +15,7 @@ windows: lael.lib lael.dll prog_estatico.exe prog_dinamico.exe
 init: 	
 	@mkdir -p $(BIN_DIR)/
 	@mkdir -p $(OBJ_DIR)/
-
+	@mkdir -p $(LIB_DIR)/
 
 lael.a: $(SRC_DIR)/lael.cpp $(INC_DIR)/buscaseq.h $(INC_DIR)/buscabin.h $(INC_DIR)/selectionsort.h $(INC_DIR)/insertionsort.h $(INC_DIR)/quicksort.h $(INC_DIR)/mergesort.h $(INC_DIR)/lista.h $(INC_DIR)/bubblesort.h $(INC_DIR)/fila.h $(INC_DIR)/buscater.h
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/lael.cpp -o $(OBJ_DIR)/lael.o
@@ -43,7 +43,7 @@ $(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp $(LIB_DIR)/lael.a $(INC_DIR)/testebuscas.
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 
-lael.lib:$(SRC_DIR)/lael.cpp $(INC_DIR)/buscaseq.h $(INC_DIR)/buscabin.h $(INC_DIR)./selectionsort.h $(INC_DIR)/insertionsort.h $(INC_DIR)/quicksort.h $(INC_DIR)/mergesort.h $(INC_DIR)/lista.h $(INC_DIR)/bubblesort.h $(INC_DIR)/fila.h $(INC_DIR)/buscater.h
+lael.lib:$(SRC_DIR)/lael.cpp $(INC_DIR)/buscaseq.h $(INC_DIR)/buscabin.h $(INC_DIR)/selectionsort.h $(INC_DIR)/insertionsort.h $(INC_DIR)/quicksort.h $(INC_DIR)/mergesort.h $(INC_DIR)/lista.h $(INC_DIR)/bubblesort.h $(INC_DIR)/fila.h $(INC_DIR)/buscater.h
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/lael.cpp -o $(OBJ_DIR)/lael.o
 	$(AR) rcs $(LIB_DIR)/$@ $(OBJ_DIR)/lael.o
 	@echo "+++[Biblioteca estatica criada em $(LIB_DIR)/$@] +++"
@@ -57,7 +57,7 @@ prog_estatico.exe:
 	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp $(LIB_DIR)/lael.lib -o $(BIN_DIR)/$@
 
 prog_dinamico.exe:
-	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp $(LIB_DIR)/lael.dll -o $(BIN_DIR/$@
+	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp $(LIB_DIR)/lael.dll -o $(BIN_DIR)/$@
 
 doxy:
 	doxygen -g
